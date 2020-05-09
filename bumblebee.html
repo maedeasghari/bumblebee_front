@@ -1,0 +1,39 @@
+<!DOCTYPE html> 
+<html> 
+
+
+<body> 
+
+	<script> 
+		function Highlight(object) { 
+			for (var prop in object) { 
+				if (object.hasOwnProperty(prop)) { 
+					if (object[prop] === 0)
+						document.write(prop);
+					else if (object[prop] === 'red') 
+						document.write('<span style="background-color:red">'+prop+'</span>');
+					else if (object[prop] === 'blue') 
+						document.write('<span style="background-color:blue">'+prop+'</span>');
+					else if (object[prop] === 'purple') 
+						document.write('<span style="background-color:purple">'+prop+'</span>');
+					else if (object[prop] === 'green') 
+						document.write('<span style="background-color:green">'+prop+'</span>');
+				} 
+			} 
+		} 
+	
+		var exampleObject = { 
+			key1: 'red', 
+			key2: 0, 
+			key3: 'green',
+			key4: 'purple',
+			key5: 'blue'
+		}; 
+
+		ans = Highlight(exampleObject); 
+		 
+		
+	</script> 
+</body> 
+
+</html> 
