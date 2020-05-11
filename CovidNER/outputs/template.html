@@ -1,0 +1,26 @@
+<!DOCTYPE html> 
+<html> 
+<body> 
+    <p id='panel_text'></p>
+	<script> 
+		function Highlight(object) {
+            var panel = document.getElementById('panel_text')
+            text = ""
+			for (var _prop in object) { 
+                prop_current = object[_prop]
+                for(var prop in prop_current)
+                {
+                    if (prop_current[prop] === 0)
+                        text+= prop + '&nbsp';
+                    else
+                        text += '<span style="background-color:'+prop_current[prop]+'">'+prop+'</span>' + '&nbsp';
+                } 
+            }
+            panel.innerHTML = text 
+		} 
+		var exampleObject = #values#;
+		Highlight(exampleObject); 
+	</script> 
+</body> 
+
+</html> 
