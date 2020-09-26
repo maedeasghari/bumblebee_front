@@ -16,16 +16,20 @@ class Text:
 
     def output_file_maker(self):
         output = open(self.output_address, 'a+')
-        output.write(str(self.text_dict) + '\n')
+        for i in self.text_dict:
+
+            output.write(str(i) + '\n')
         output.close()
 
-    def text_maker(self , make_file=True):
+    def text_maker(self, make_file=True):
+        colors = []
+        color_words = []
         self.text_dict = []
         self.csv_opener()
+        temp_list = []
         for line in self.csv_file:
             records = line.split(',')
-            #break_flag = False
-            #records = split_line.split(',')
+
             if len(records) > 0:
                 word = records[1].strip()
                 tags = records[4:]
@@ -33,37 +37,40 @@ class Text:
                 tag_label = []
                 for t in tags:
                     t = t.strip()
-                    if t != 'o' and t not in tag_label :
+                    if t != 'o' and t not in tag_label:
                         tag_label.append(t.strip())
                 tag_label = ','.join(tag_label)
                 if word != '':
                     if word == '.':
-                        self.text_dict.append({word + '\n':0})
+                        self.text_dict.append({word + '\n': 0})
                     elif tag_label in self.color_word_map_dict:
-                        self.text_dict.append({word:self.color_word_map_dict[tag_label]})
-                    else:
-                        self.text_dict.append({word:0})
-            # for word in self.color_word_map_dict:
-            #     if len(word.split(',')) != 1:
-            #         multiple_word_flag = False
-            #         for single_word in word.split(','):
-            #             if single_word not in split_line:
-            #                 multiple_word_flag = True
-            #                 break
-            #         if not multiple_word_flag:
-            #             self.text_dict[split_line[0]] = self.color_word_map_dict[word]
-            #             break_flag = True
+                        color_words.append(word)
+                        colors.append(self.color_word_map_dict[tag_label])
 
-            # if not break_flag:
-            #     for word in self.color_word_map_dict:
-            #         if len(word.split(',')) == 1 and word in split_line:
-            #             self.text_dict[split_line[0]] = self.color_word_map_dict[word]
-            #             break_flag = True
-            # if not break_flag:
-            #     if split_line[0] == '.':
-            #         self.text_dict['. \n'] = ''
-            #     else:
-            #         self.text_dict[split_line[0]] = '0'
+                        if len(colors) > 1 and self.color_word_map_dict[tag_label] == colors[-2]:
+                            if not temp_list and len(color_words) > 1:
+                                temp_list.append({color_words[-2]: colors[-2]})
+                            temp_list.append({word: self.color_word_map_dict[tag_label]})
+                        elif temp_list:
+                            print(temp_list)
+                            statement = ""
+                            for single_word in temp_list:
+                                statement += str(*single_word.keys()) + " "
+                            self.text_dict.append({
+                                statement: self.color_word_map_dict[tag_label]
+                            })
+                            temp_list = []
+                            if make_file:
+                                self.output_file_maker()
+                                self.text_dict = []
+                            self.text_dict.append({word: self.color_word_map_dict[tag_label]})
+
+                        else:
+                            self.text_dict.append({word: self.color_word_map_dict[tag_label]})
+
+                    else:
+                        self.text_dict.append({word: 0})
+
             if make_file:
                 self.output_file_maker()
-                self.text_dict = {}
+                self.text_dict = []
