@@ -57,16 +57,16 @@ class Text:
                             for single_word in temp_list:
                                 statement += str(*single_word.keys()) + " "
                             self.text_dict.append({
-                                statement: self.color_word_map_dict[tag_label]
+                                statement: self.color_word_map_dict[tag_label], tag_label: tag_label
                             })
                             temp_list = []
                             if make_file:
                                 self.output_file_maker()
                                 self.text_dict = []
-                            self.text_dict.append({word: self.color_word_map_dict[tag_label]})
+                            self.text_dict.append({word: self.color_word_map_dict[tag_label], tag_label: tag_label})
 
                         else:
-                            self.text_dict.append({word: self.color_word_map_dict[tag_label]})
+                            self.text_dict.append({word: self.color_word_map_dict[tag_label], tag_label: tag_label})
 
                     else:
                         self.text_dict.append({word: 0})
