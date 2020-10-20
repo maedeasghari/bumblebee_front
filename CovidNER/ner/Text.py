@@ -8,6 +8,7 @@ class Text:
         self.csv_file = ''
         self.text_dict = []
         self.csv_header = ''
+        self.repeated_words = dict()
 
     def csv_opener(self):
 
@@ -22,6 +23,9 @@ class Text:
         output.close()
 
     def text_maker(self, make_file=True):
+        self.repeated_words = dict()
+        for word in self.color_word_map_dict:
+            self.repeated_words[word] = 0
         colors = []
         color_words = []
         self.text_dict = []
@@ -50,7 +54,9 @@ class Text:
                         if len(colors) > 1 and self.color_word_map_dict[tag_label] == colors[-2]:
                             if not temp_list and len(color_words) > 1:
                                 temp_list.append({color_words[-2]: colors[-2]})
+                                self.repeated_words[color_words[-2]] += 1
                             temp_list.append({word: self.color_word_map_dict[tag_label]})
+                            self.repeated_words[word] += 1
                         elif temp_list:
                             print(temp_list)
                             statement = ""
@@ -64,9 +70,11 @@ class Text:
                                 self.output_file_maker()
                                 self.text_dict = []
                             self.text_dict.append({word: self.color_word_map_dict[tag_label], tag_label: tag_label})
+                            self.repeated_words[word] += 1
 
                         else:
                             self.text_dict.append({word: self.color_word_map_dict[tag_label], tag_label: tag_label})
+                            self.repeated_words[word] += 1
 
                     else:
                         self.text_dict.append({word: 0})

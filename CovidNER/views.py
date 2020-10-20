@@ -18,5 +18,5 @@ def covidner():
     template_fh = open('outputs/template.html', 'r')
     template = template_fh.read()
     template = template.replace('#values#', str(text.text_dict))
-
+    template = template.replace('#repeated#', str(text.repeated_words))
     return template

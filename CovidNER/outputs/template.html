@@ -30,7 +30,7 @@
     <p id='panel_text'></p>
   <script>
 
-    function Highlight(object) {
+    function Highlight(object, repeated_words) {
             var panel = document.getElementById('panel_text')
             text = ""
       for (var _prop in object) {
@@ -57,7 +57,8 @@
             panel.innerHTML = text
     }
     var exampleObject = #values#;
-    Highlight(exampleObject);
+    var repeated_words = #repeated#;
+    Highlight(exampleObject, repeated_words);
   </script>
 </body>
 
