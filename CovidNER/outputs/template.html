@@ -1,65 +1,47 @@
 <!DOCTYPE html> 
-<html> 
-<body>
+<html>
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: gray;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: 100%;
-  left: 50%;
-  margin-left: -60px;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
+	a, a:hover {
+		text-decoration: none;
+		color: black;
+	}
 </style>
+</head>
+<body>
     <p id='panel_text'></p>
-  <script>
+	<script>
 
-    function Highlight(object, repeated_words) {
+		function Highlight(object) {
             var panel = document.getElementById('panel_text')
             text = ""
-      for (var _prop in object) {
+			for (var _prop in object) {
                 prop_current = object[_prop]
-
-        console.log(prop_current);
 
                 for(var prop in prop_current)
                 {
-                  // console.log(prop);
                     if (prop_current[prop] === 0)
                         text+= prop + '&nbsp';
-
-                    else if( prop === "tag_label"){
-                       console.log(prop_current[prop]);
-          }
-
-                    else
-                        text += '<span style="background-color:'+prop_current[prop]+';" class="tooltip">'+prop+' ' +
-                '<span class="tooltiptext" style="color:prop_current[prop];">Tooltip text</span>' +
-                '</span>' + '&nbsp';
+                    else if(prop !== 'tag_label'){
+                    	text += '<a href="#" style="background-color:'+prop_current[prop]+'; " title="'+prop_current["tag_label"]+'" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="ye chizai khodet goofti mizari" >'+prop+' ' +
+								'</a>' + '&nbsp';
+                    	$(document).ready(function(){
+    					$('[data-toggle="popover"]').popover();
+						});
+					}
                 }
             }
             panel.innerHTML = text
-    }
-    var exampleObject = #values#;
-    var repeated_words = #repeated#;
-    Highlight(exampleObject, repeated_words);
-  </script>
+		}
+		var exampleObject = #values#;
+		Highlight(exampleObject);
+	</script>
 </body>
 
 </html>

@@ -54,27 +54,27 @@ class Text:
                         if len(colors) > 1 and self.color_word_map_dict[tag_label] == colors[-2]:
                             if not temp_list and len(color_words) > 1:
                                 temp_list.append({color_words[-2]: colors[-2]})
-                                self.repeated_words[color_words[-2]] += 1
+                                self.repeated_words[tag_label] += 1
                             temp_list.append({word: self.color_word_map_dict[tag_label]})
-                            self.repeated_words[word] += 1
+                            self.repeated_words[tag_label] += 1
                         elif temp_list:
                             print(temp_list)
                             statement = ""
                             for single_word in temp_list:
                                 statement += str(*single_word.keys()) + " "
                             self.text_dict.append({
-                                statement: self.color_word_map_dict[tag_label], tag_label: tag_label
+                                statement: self.color_word_map_dict[tag_label], 'tag_label': tag_label
                             })
                             temp_list = []
                             if make_file:
                                 self.output_file_maker()
                                 self.text_dict = []
-                            self.text_dict.append({word: self.color_word_map_dict[tag_label], tag_label: tag_label})
-                            self.repeated_words[word] += 1
+                            self.text_dict.append({word: self.color_word_map_dict[tag_label], 'tag_label': tag_label})
+                            self.repeated_words[tag_label] += 1
 
                         else:
-                            self.text_dict.append({word: self.color_word_map_dict[tag_label], tag_label: tag_label})
-                            self.repeated_words[word] += 1
+                            self.text_dict.append({word: self.color_word_map_dict[tag_label], "tag_label": tag_label})
+                            self.repeated_words[tag_label] += 1
 
                     else:
                         self.text_dict.append({word: 0})
